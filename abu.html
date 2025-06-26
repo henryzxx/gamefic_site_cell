@@ -1,3 +1,755 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamefic - Aprender é uma aventura mágica!</title>
+    <style>
+        :root {
+            --primary-color: #705CE1;
+            --secondary-color: #FFD351;
+            --white-color: #FFFFFF;
+            --dark-color: #3c3c3c;
+            --light-gray: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding-bottom: 70px;
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 0 15px;
+        }
+        
+        /* Header Superior */
+        .top-header {
+            background-color: var(--white-color);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .top-menu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .top-menu i {
+            color: var(--primary-color);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        /* Header Principal */
+        .main-header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .main-header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .main-header p {
+            font-size: 14px;
+        }
+        
+        /* Menu Principal (inferior) */
+        .main-menu {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--white-color);
+            padding: 12px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 25%;
+        }
+        
+        .menu-item i {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .menu-item.active i {
+            color: var(--primary-color);
+        }
+        
+        .menu-item span {
+            font-size: 12px;
+            color: var(--dark-color);
+        }
+        
+        .menu-item.active span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Conteúdo Principal */
+        .content {
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: var(--white-color);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(150, 89, 89, 0.1);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 10px 0;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background-color: var(--primary-color);
+            width: 65%;
+        }
+        
+        /* Personagem */
+        .character {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .character-img {
+            width: 70px;
+            height: 70px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--dark-color);
+            font-size: 35px;
+            z-index: 0;
+            object-position: center; /* Alinha o foco do GIF */
+            background-color: transparent !important;
+            
+        }
+        .character-img {
+            width: 70px;  /* Altere conforme necessário */
+            height: 70px;
+            background-color: var(--secondary-color); /* Amarelo */
+            border-radius: 50%;
+            /* Mantenha o resto */
+}
+        
+        .video {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 2;
+        }
+        
+        .character-speech {
+            background-color: var(--white-color);
+            padding: 12px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .character-speech:after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-right-color: var(--white-color);
+        }
+        
+        /* Cards de Jogo/Desafio */
+        .game-card {
+            background: linear-gradient(135deg, var(--primary-color), #8D7AE6);
+            color: var(--white-color);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .game-card p {
+            font-size: 14px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .game-card .btn {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .game-card .decoration {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 60px;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        /* Tutorial */
+        .tutorial-steps {
+            margin-left: 20px;
+        }
+        
+        .tutorial-step {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+        }
+        
+        /* Badges */
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .badge {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .badge i {
+            margin-right: 5px;
+        }
+        
+        /* Produtos Shopping */
+        .products {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        
+        .product {
+            min-width: 150px;
+            background-color: var(--white-color);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .product-img {
+            width: 80px;
+            height: 80px;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 30px;
+        }
+        
+        .product-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            font-size: 12px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Botão Flutuante */
+        .floating-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 90;
+        }
+
+        /* Modo Escuro */
+body.dark-mode {
+    background-color: #483a68;
+    color: #e0e0e0;
+}
+
+.dark-mode .card {
+    background-color: #5d5394;
+    color: #ffffff;
+}
+
+.dark-mode .game-card {
+    background: linear-gradient(135deg, #5d5394, #6d5fd3) !important;
+}
+
+.dark-mode .character-speech {
+    background-color: #705CE1;
+    color: #ffffff;
+}
+
+.dark-mode .character-speech:after {
+    border-right-color: #b1b1b1;
+}
+
+.dark-mode .main-menu {
+    background-color: #403763;
+    border-top: 1px solid #333;
+}
+
+.dark-mode .menu-item i,
+.dark-mode .menu-item span {
+    color: #bb86fc !important;
+}
+
+.dark-mode .menu-item.active i,
+.dark-mode .menu-item.active span {
+    color: #ffffff !important;
+}
+
+.dark-mode .section-title {
+    color: #bb86fc;
+}
+
+.dark-mode .card-title {
+    color: #bb86fc;
+}
+
+.dark-mode .progress-container {
+    background-color: #ffffff;
+}
+
+/* Botão de Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 140px;
+    background: var(--primary-color);
+    color: rgb(255, 255, 255);
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(206, 174, 174, 0.2);
+}
+
+.theme-toggle i {
+    font-size: 20px;
+}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+    <button class="theme-toggle" id="themeToggle" title="Modo Escuro" object-fit="cover">
+        <i class="fas fa-moon"></i>
+    </button>
+<body>
+    <!-- Topo com configurações -->
+    <div class="top-header">
+        <div class="logo">GAMEFIC</div>
+        <div class="top-menu">
+            <i class="fas fa-book-open" title="Biblioteca"></i>
+            <i class="fas fa-store" title="Shopping"></i>
+            <i class="fas fa-cog" title="Configurações"></i>
+        </div>
+    </div>
+    
+    <!-- Cabeçalho principal -->
+    <header class="main-header">
+        <h1>Aprender é uma aventura mágica!</h1>
+        <p>Complete desafios e desbloqueie recompensas</p>
+    </header>
+    
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <div class="character">
+            <div class="character-img">
+    <img src="Game.gif" alt="Personagem Gamefic" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+</div>
+            <div class="character-speech">
+                Olá, explorador! Pronto para nossa missão de hoje? Vamos aprender algo incrível!
+            </div>
+        </div>
+        
+        <h2 class="section-title">
+            <i class="fas fa-chart-line"></i> Seu Progresso
+        </h2>
+        <div class="card">
+            <div class="card-title">Sua jornada hoje</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            <p>Você completou 4 de 6 atividades diárias!</p>
+            <div class="badges">
+                <div class="badge">
+                    <i class="fas fa-fire"></i> Sequência: 5 dias
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">
+            <i class="fas fa-trophy"></i> Desafios
+        </h2>
+        <div class="game-card">
+            <div class="decoration">
+                <i class="fas fa-star"></i>
+            </div>
+            <h3>Missão do Dia</h3>
+            <p>Complete 3 lições de matemática para ganhar 50 pontos!</p>
+            <button class="btn">Iniciar</button>
+        </div>
+        
+        <div class="game-card" style="background: linear-gradient(135deg, #FFD351, #FFD351); color: #ffffff;">
+            <div class="decoration" style="color: #c1b4ff;">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Desafio Relâmpago</h3>
+            <p>Responda 10 perguntas em menos de 5 minutos!</p>
+            <button class="btn" style="color: #88673b;">Tentar</button>
+        </div>
+        
+        <div class="game-card" style="background: linear-gradient(135deg, #7869c4, #bc9cff);">
+            <div class="decoration">
+                <i class="fas fa-language"></i>
+            </div>
+            <h3>Novo Idioma</h3>
+            <p>Aprenda 5 novas palavras em espanhol hoje!</p>
+            <button class="btn" style="color: #5d567e;">Começar</button>
+        </div>
+        
+        <h2 class="section-title">
+            <i class="fas fa-store"></i> Shopping Gamefic
+        </h2>
+        <div class="card">
+            <div class="card-title">Produtos Exclusivos</div>
+            <div class="products">
+                <div class="product">
+                    <div class="product-img">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="product-title">Kit Leitura</div>
+                    <div class="product-price">R$ 49,90</div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="product-title">Jogo Matemático</div>
+                    <div class="product-price">R$ 39,90</div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="product-title">Boneco Mágico</div>
+                    <div class="product-price">R$ 59,90</div>
+                </div>
+                <div class="product">
+                    <div class="product-img">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="product-title">Kit Artes</div>
+                    <div class="product-price">R$ 45,90</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">
+            <i class="fas fa-book-open"></i> Biblioteca
+        </h2>
+        <div class="card">
+            <div class="card-title">Seus Materiais</div>
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>Matemática Básica</strong> - Nível 2 (65% completo)
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Inglês Iniciante</strong> - Nível 1 (30% completo)
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Ciências Exploratórias</strong> - Disponível para desbloqueio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Menu inferior -->
+    <nav class="main-menu">
+        <div class="menu-item active">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-gamepad"></i>
+            <span>Jogos</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Aulas</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+        </div>
+    </nav>
+    
+    <!-- Botão flutuante -->
+    <div class="floating-btn">
+        <i class="fas fa-plus"></i>
+    </div>
+    
+    <script>
+        // Interação do menu superior
+        document.querySelectorAll('.top-menu i').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const title = this.getAttribute('title');
+                let message = "";
+                
+                if(title === "Biblioteca") {
+                    message = "Na biblioteca você encontra todos seus materiais de estudo e livros digitais!";
+                } else if(title === "Shopping") {
+                    message = "Confira nossos produtos físicos que complementam sua experiência de aprendizado!";
+                } else if(title === "Configurações") {
+                    message = "Ajuste suas preferências e configurações pessoais aqui!";
+                }
+                
+                document.querySelector('.character-speech').textContent = message;
+            });
+        });
+        
+        // Interação do menu inferior
+        document.querySelectorAll('.main-menu .menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.main-menu .menu-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                let message = "Olá, explorador! O que vamos aprender hoje?";
+                
+                if(this.querySelector('i').classList.contains('fa-gamepad')) {
+                    message = "Escolha um dos nossos jogos educativos para começar a diversão!";
+                } else if(this.querySelector('i').classList.contains('fa-graduation-cap')) {
+                    message = "Nossas aulas interativas te esperam! Vamos começar?";
+                } else if(this.querySelector('i').classList.contains('fa-user')) {
+                    message = "Este é seu perfil! Aqui você vê seu progresso e conquistas.";
+                }
+                
+                document.querySelector('.character-speech').textContent = message;
+            });
+        });
+        
+        // Interação dos botões
+        document.querySelectorAll('.btn, .floating-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+                
+                if(this.classList.contains('floating-btn')) {
+                    document.querySelector('.character-speech').textContent = "Ótimo! Vamos criar um novo desafio personalizado para você!";
+                } else {
+                    document.querySelector('.character-speech').textContent = "Excelente escolha! Prepare-se para aprender de forma divertida!";
+                }
+            });
+        });
+        
+        // Simular carregamento de produtos (em um app real, viria de uma API)
+        setTimeout(() => {
+            const productsContainer = document.querySelector('.products');
+            if(productsContainer.children.length === 4) {
+                const newProduct = document.createElement('div');
+                newProduct.className = 'product';
+                newProduct.innerHTML = `
+                    <div class="product-img">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="product-title">Kit Ciências</div>
+                    <div class="product-price">R$ 54,90</div>
+                `;
+                productsContainer.appendChild(newProduct);
+            }
+        }, 1500);
+        // Modo Escuro
+const ThemeToggle = document.getElementById('themeToggle');
+const Icon = ThemeToggle.querySelector('i');
+
+// Verifica preferência salva ou do sistema
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme') || 
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    icon.classList.replace('fa-moon', 'fa-sun');
+    }
+}
+
+// Alternar tema
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    if (document.body.classList.contains('dark-mode')) {
+    localStorage.setItem('theme', 'dark');
+    icon.classList.replace('fa-moon', 'fa-sun');
+    } else {
+    localStorage.setItem('theme', 'light');
+    icon.classList.replace('fa-sun', 'fa-moon');
+    }
+});
+
+// Carrega o tema ao iniciar
+loadTheme();
+
+// Observa mudanças no sistema
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+    if (e.matches) {
+        document.body.classList.add('dark-mode');
+        icon.classList.replace('fa-moon', 'fa-sun');
+    } else {
+        document.body.classList.remove('dark-mode');
+        icon.classList.replace('fa-sun', 'fa-moon');
+    }
+    }
+});
+    </script>
+</body>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -748,4 +1500,5 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
 });
     </script>
 </body>
+>>>>>>> 0b939da8722e5e18a11bded64e97b06813aeb4d2
 </html>
